@@ -9,6 +9,7 @@
 #  updated_at :datetime         not null
 #
 class Product < ApplicationRecord
+  has_many :order_product_items
   validate :count, numericality: { only_integer: true ,greater_than: 0}
   validate :name, presence: true
 end

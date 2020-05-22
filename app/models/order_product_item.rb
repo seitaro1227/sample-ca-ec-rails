@@ -23,4 +23,7 @@
 class OrderProductItem < ApplicationRecord
   belongs_to :order
   belongs_to :product
+  # history系は分けるべき?
+  validate :count, numericality: { only_integer: true ,greater_than: 0}
+  validate :product_name, presence: true
 end

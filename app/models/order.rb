@@ -19,4 +19,8 @@
 #
 class Order < ApplicationRecord
   belongs_to :user
+  has_many :order_product_items
+  # history系は分けるべき?
+  validate :user_address, presence: true
+  validate :user_name, presence: true
 end
