@@ -1,0 +1,14 @@
+# == Schema Information
+#
+# Table name: products
+#
+#  id         :integer          not null, primary key
+#  count      :integer
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+class Product < ApplicationRecord
+  validate :count, numericality: { only_integer: true ,greater_than: 0}
+  validate :name, presence: true
+end
