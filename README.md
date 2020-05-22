@@ -19,21 +19,40 @@ cookieで持つ
 * 在庫がある時だけ注文を作成する
 * 注文を確定すると在庫を減らす
 * 配送先はユーザーごとに持っている
-
+user_id
+user_name
+user_address
+order_product_items
+    * product_id
+    * product_name
+    * count
+ 
 ### ユーザー
 名前と住所を持っている
 名前 注文者太郎
 住所1* 千葉県
 住所2* 松戸市六高台 33-4
 住所3 なんとかアパート 101
+name
+address_1
+address_2
+address_3
 
 ### 配送先
 ユーザーごとに持っている
 
 ### shop
 * 配送元
+name
+address_1
+address_2
+address_3
 
-### 配送業者
+### 配送テーブル
+deliveries
+* from_address
+* to_address
+* price
 * 配送元
 * 配送先
 * 送料
