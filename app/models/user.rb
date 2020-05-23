@@ -11,8 +11,8 @@
 #  updated_at :datetime         not null
 #
 class User < ApplicationRecord
-  validate :address_1, presence: true
-  validate :address_2, presence: true
-  validate :address_3, presence: true
-  validate :name, presence: true
+  validates :address_1, presence: true
+  validates :address_2, presence: true
+  validates :address_3, presence: true
+  validates :name, presence: true
 end
