@@ -11,5 +11,11 @@
 require 'rails_helper'
 
 RSpec.describe Product, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:product) { build(:product) }
+
+  context '正常系' do
+    it 'be_valid' do
+      expect(product).to be_valid
+    end
+  end
 end

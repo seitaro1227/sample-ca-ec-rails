@@ -13,5 +13,11 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:user) { create(:user) }
+
+  context '正常系' do
+    it 'be_valid' do
+      expect(user).to be_valid
+    end
+  end
 end

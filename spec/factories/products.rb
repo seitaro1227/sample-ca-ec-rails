@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :product do
-    sequence(:name) { |n| "items_#{n}" }
+    sequence(:name) { |n| "product_#{n}" }
     count { 10 }
   end
 end

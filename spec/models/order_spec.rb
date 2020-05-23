@@ -20,5 +20,11 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:order) { build(:order) }
+
+  context '正常系' do
+    it 'be_valid' do
+      expect(order).to be_valid
+    end
+  end
 end
