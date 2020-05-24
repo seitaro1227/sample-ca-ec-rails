@@ -16,12 +16,13 @@ RSpec.describe "/orders", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Order. As you add validations to Order, be sure to
   # adjust the attributes here as well.
+  let!(:user) { create(:user) }
+  let!(:products) { create_list(:product, 3) }
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+        user_id: user.id,
+        products: products.pluck(:id,:count).map{|id,count|{id:id,count:count}}
+    }
   }
 
   # This should return the minimal set of values that should be in the headers
@@ -33,51 +34,100 @@ RSpec.describe "/orders", type: :request do
   }
 
   describe "GET /index" do
+    before do
+      create_list(:order,3)
+    end
+
     it "renders a successful response" do
-      Order.create! valid_attributes
-      get orders_url, headers: valid_headers, as: :json
+      get orders_url
       expect(response).to be_successful
     end
   end
 
   describe "GET /show" do
+    let!(:order) { create(:order) }
     it "renders a successful response" do
-      order = Order.create! valid_attributes
-      get order_url(order), as: :json
+      get order_url(order)
       expect(response).to be_successful
     end
   end
 
   describe "POST /create" do
     context "with valid parameters" do
-      it "creates a new Order" do
-        expect {
-          post orders_url,
-               params: { order: valid_attributes }, headers: valid_headers, as: :json
-        }.to change(Order, :count).by(1)
+      before do
+        post orders_url, params: valid_attributes, as: :json
+      end
+      # * ユーザーid, 商品, 個数を受け取る
+      # * 在庫がある時だけ注文を作成する
+      # * 注文を確定すると在庫を減らす
+      # * 配送先はユーザーごとに持っている
+      example "http status codeが正常に" do
+        p response.status
+        expect(response).to have_http_status(:successful)
       end
 
-      it "renders a JSON response with the new order" do
-        post orders_url,
-             params: { order: valid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:created)
-        expect(response.content_type).to match(a_string_including("application/json"))
+      xexample "注文が作られた" do
+
+      end
+
+      xexample "商品が減っている" do
+
       end
     end
 
     context "with invalid parameters" do
-      it "does not create a new Order" do
-        expect {
-          post orders_url,
-               params: { order: invalid_attributes }, as: :json
-        }.to change(Order, :count).by(0)
+      context "在庫がない商品を注文する" do
+        let(:invalid_stock_over_products_attributes) {
+          valid_attributes.merge(
+              {products: products.pluck(:id, :count).map { |id, _count| {id: id, count: 99} }}
+          )
+        }
+        before do
+          post orders_url, params: invalid_stock_over_products_attributes, as: :json
+        end
+
+        example "http status unprocessable_entity" do
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        xexample "注文が作られていないこと" do
+
+        end
+      end
+      context "存在しない商品を注文する" do
+        let(:invalid_not_found_products_attributes) {
+          valid_attributes.merge(
+              {products: products.pluck(:id, :count).map { |_id, count| {id: -1, count: count} }}
+          )
+        }
+        before do
+          post orders_url, params: invalid_not_found_products_attributes, as: :json
+        end
+
+        example "http status unprocessable_entity" do
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        xexample "注文が作られていないこと" do
+
+        end
       end
 
-      it "renders a JSON response with errors for the new order" do
-        post orders_url,
-             params: { order: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
+      context "存在しないユーザーが注文する" do
+        let(:invalid_not_found_user_attributes) {
+          valid_attributes.merge({user_id: -1})
+        }
+        before do
+          post orders_url, params: invalid_not_found_user_attributes, as: :json
+        end
+
+        example "http status unprocessable_entity" do
+          expect(response).to have_http_status(:unprocessable_entity)
+        end
+
+        xexample "注文が作られていないこと" do
+
+        end
       end
     end
   end
