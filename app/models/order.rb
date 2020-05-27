@@ -20,7 +20,9 @@
 class Order < ApplicationRecord
   belongs_to :user
   has_many :order_product_items
+  accepts_nested_attributes_for :order_product_items
   # history系は分けるべき?
   validates :user_address, presence: true
   validates :user_name, presence: true
+  validates :order_product_items, length: {minimum: 1}
 end

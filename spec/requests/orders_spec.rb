@@ -43,7 +43,7 @@ RSpec.describe "/orders", type: :request do
 
       example "商品が減っている" do
         products_ids = products.pluck(:id)
-        new_product_count = Product.where(id: products_ids).pluck([:id, :count]).to_h
+        new_product_count = Product.where(id: products_ids).pluck(:id, :count).to_h
         new_product_count.each_key { |key|
           expected = products_id_count[key]
           actual = new_product_count[key]
