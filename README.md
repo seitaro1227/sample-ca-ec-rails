@@ -83,5 +83,6 @@ end
 ```
 こういうの作ってみようと思う
 
+![Interactorシーケンス図](https://github.com/seitaro1227/sample-ca-ec-rails/raw/master/Interactor_%E3%82%B7%E3%83%BC%E3%82%B1%E3%83%B3%E3%82%B9%E5%9B%B3.png)
 
 
