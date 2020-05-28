@@ -56,3 +56,32 @@ deliveries
 * 配送元
 * 配送先
 * 送料
+
+---
+## step1
+* ビジネスロジックをすべてControllerに実装する
+
+## step2
+* ビジネスロジックをInteractorに切り出す
+* InteractorとはUseCaseの実装
+* 他の言語ではUserCaseをinterfaceで作ってInteractorで実装する
+* Interactor gemを使ってみる
+    * 使えそうな機能
+        * context
+            * なにかの業務Interactor.call(user)
+            * この引数
+        * Around Hooks
+            * Transactionを仕掛けられそう
+        * Organizers
+            * 複数のInteractorを呼べる
+```ruby
+class PlaceOrder
+  include Interactor::Organizer
+
+  organize CreateOrder, ChargeCard, SendThankYou
+end
+```
+こういうの作ってみようと思う
+
+
+
