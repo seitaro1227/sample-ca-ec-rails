@@ -24,11 +24,16 @@ require 'rails_helper'
 
 RSpec.describe OrderProductItem, type: :model do
   let(:order) { build(:order) }
-  let(:order_product_item) { build(:order_product_item, order: order) }
+  let(:product) { build(:product) }
+  let(:order_product_item) { build(:order_product_item, order: order, product: product) }
 
   context '正常系' do
     it 'be_valid' do
       expect(order_product_item).to be_valid
+    end
+    it 'set_histories' do
+      expect(order_product_item).to be_valid
+      expect(order_product_item.product_name).to eq product.name
     end
   end
 end

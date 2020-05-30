@@ -22,9 +22,9 @@
 #
 FactoryBot.define do
   factory :order_product_item do
-    product_name { "MyString" }
+    product_name { nil }
     count { 1 }
-    after(:build) do |order_product_item|
+    before(:build) do |order_product_item|
       order_product_item.product = build(:product)
     end
   end

@@ -20,11 +20,18 @@
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
-  let(:order) { build(:order) }
+  let(:user) { build(:user) }
+  let(:order) { build(:order, user: user) }
 
   context '正常系' do
     it 'be_valid' do
       expect(order).to be_valid
+    end
+
+    it 'set_histories' do
+      expect(order).to be_valid
+      expect(order.user_name).to eq user.name
+      expect(order.user_address).to eq user.address
     end
   end
 end

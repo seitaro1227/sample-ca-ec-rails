@@ -25,6 +25,14 @@ class OrderProductItem < ApplicationRecord
   belongs_to :product
   accepts_nested_attributes_for :product
   # history系は分けるべき?
-  validates :count, numericality: { only_integer: true ,greater_than: 0}
+  validates :count, numericality: {only_integer: true, greater_than: 0}
   validates :product_name, presence: true
+
+  before_validation :set_histories
+
+  private
+
+  def set_histories
+    self.product_name = self.product.name
+  end
 end

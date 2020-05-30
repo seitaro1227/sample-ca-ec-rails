@@ -15,4 +15,8 @@ class User < ApplicationRecord
   validates :address_2, presence: true
   validates :address_3, presence: true
   validates :name, presence: true
+
+  def address
+    "#{address_1} #{address_2} #{address_3}"
+  end
 end

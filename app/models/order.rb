@@ -25,4 +25,13 @@ class Order < ApplicationRecord
   validates :user_address, presence: true
   validates :user_name, presence: true
   validates :order_product_items, length: {minimum: 1}
+
+  before_validation :set_histories
+
+  private
+
+  def set_histories
+    self.user_name = self.user.name
+    self.user_address = self.user.address
+  end
 end

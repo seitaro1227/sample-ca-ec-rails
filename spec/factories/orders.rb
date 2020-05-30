@@ -19,10 +19,10 @@
 #
 FactoryBot.define do
   factory :order do
-    user_name { "MyString" }
-    user_address { "MyString" }
+    user_name { nil }
+    user_address { nil }
 
-    after(:build){ |order|
+    before(:build){ |order|
       order.user = build(:user)
       order.order_product_items = build_list(:order_product_item, 3)
     }
