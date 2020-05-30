@@ -12,4 +12,9 @@ class Product < ApplicationRecord
   has_many :order_product_items
   validates :count, numericality: { only_integer: true ,greater_than_or_equal_to: 0}
   validates :name, presence: true
+
+  def subtraction_stock(count)
+    self.count = self.count - count
+    self
+  end
 end
