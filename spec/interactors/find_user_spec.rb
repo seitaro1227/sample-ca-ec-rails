@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe FindUser, type: :interactor do
-  # let(:user) { create :user }
-  let(:context) { FindUser.call({user_id: 1 })}
+  subject(:context) { FindUser.call({user_id: 1}) }
   describe '.call' do
     let(:user) { double(:user, name: "test_name") }
     before do
