@@ -1,17 +1,25 @@
 require 'spec_helper'
 
 RSpec.describe UpdateStock, type: :interactor do
-  let!(:product){create(:product)}
-  subject(:context) { UpdateStock.call({products: [{id: product.id, count: 1}]}) }
+  subject(:context) { # p params
+    UpdateStock.call({products: [{id: 1, count: 1}]})
+  }
   describe '.call' do
+    let(:product) { spy(:product) }
+    before do
+      allow(Product).to receive(:where).and_return([product])
+      allow(product).to receive(:save).and_return(true)
+      allow(product).to receive(:subtraction_stock).and_return(product)
+    end
     context '正常系' do
       it 'succeeds ' do
         expect(context).to be_a_success
       end
 
-      it 'product.count' do
-        fetch_product = Product.find(product.id)
-        expect(fetch_product.id).to eq product.count - 1
+      it 'call product method' do
+        context
+        expect(product).to have_received(:subtraction_stock)
+        expect(product).to have_received(:save)
       end
     end
   end
