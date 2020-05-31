@@ -17,5 +17,9 @@ RSpec.describe Product, type: :model do
     it 'be_valid' do
       expect(product).to be_valid
     end
+
+    it 'subtraction_stock' do
+      expect(product.subtraction_stock(1).count).to eq 9
+    end
   end
 end
