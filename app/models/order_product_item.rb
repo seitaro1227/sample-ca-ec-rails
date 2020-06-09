@@ -30,6 +30,11 @@ class OrderProductItem < ApplicationRecord
 
   before_validation :set_histories
 
+  def inventory_allocation(item_count)
+    product.subtraction_stock(item_count)
+    self.count = item_count
+  end
+
   private
 
   def set_histories
