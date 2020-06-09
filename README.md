@@ -78,7 +78,7 @@ deliveries
 class PlaceOrder
   include Interactor::Organizer
 
-  organize CreateOrder, ChargeCard, SendThankYou
+  organize BuildOrder, ChargeCard, SendThankYou
 end
 ```
 こういうの作ってみようと思う

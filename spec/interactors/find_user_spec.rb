@@ -1,9 +1,14 @@
 require 'spec_helper'
 
 RSpec.describe FindUser, type: :interactor do
-  subject(:context) { FindUser.call({user_id: 1}) }
+  let(:params) {
+    {
+        param_user_id: 1
+    }
+  }
+  subject(:context) { FindUser.call(params) }
   describe '.call' do
-    let(:user) { double(:user, name: "test_name") }
+    let(:user) { instance_double(User) }
     before do
       allow(User).to receive(:find).with(1).and_return(user)
     end
