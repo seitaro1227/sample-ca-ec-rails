@@ -2,5 +2,5 @@
 class TransactionOrder
   include Interactor::Organizer
 
-  organize FindUser, CheckStock, UpdateStock, BuildOrder
+  organize FindUser, FindProducts, CheckStock, BuildOrder
 end
